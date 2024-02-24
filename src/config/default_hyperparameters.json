@@ -1,5 +1,4 @@
 {
-  "history_forecast_ratio": 1,
+  "history_forecast_ratio": null,
   "random_state": 0
-  
 }
