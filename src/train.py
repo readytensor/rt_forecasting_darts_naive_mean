@@ -12,7 +12,7 @@ from utils import (
     read_csv_in_directory,
     read_json_as_dict,
     set_seeds,
-    TimeAndMemoryTracker,
+    ResourceTracker,
 )
 
 logger = get_logger(task_name="train")
@@ -44,7 +44,7 @@ def run_training(
     """
 
     try:
-        with TimeAndMemoryTracker(logger) as _:
+        with ResourceTracker(logger, monitoring_interval=0.1):
             logger.info("Starting training...")
             # load and save schema
             logger.info("Loading and saving schema...")
@@ -71,7 +71,9 @@ def run_training(
 
             # use default hyperparameters to train model
             logger.info("Training forecaster...")
-            default_hyperparameters = read_json_as_dict(default_hyperparameters_file_path)
+            default_hyperparameters = read_json_as_dict(
+                default_hyperparameters_file_path
+            )
             forecaster = train_predictor_model(
                 history=validated_data,
                 data_schema=data_schema,
